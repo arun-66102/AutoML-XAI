@@ -1,0 +1,402 @@
+{
+  "job_id": "smoketest",
+  "instruction": "Predict motor failure and explain vibration risk",
+  "feedback": "",
+  "upload_path": "storage\\uploads\\smoke.csv",
+  "dataset": {
+    "filename": "smoke.csv",
+    "rows": 90,
+    "columns": 5
+  },
+  "understanding": {
+    "task_type": "classification",
+    "industrial_context": "predictive maintenance",
+    "target_column": "fault_status",
+    "confidence": 0.72,
+    "reasoning": "Task inferred from industrial keywords, available columns, and common AutoML conventions.",
+    "recommended_priority": "balanced",
+    "llm_provider": "heuristic"
+  },
+  "eda": {
+    "rows": 90,
+    "columns": 5,
+    "numeric_columns": [
+      "motor_vibration_mm_s",
+      "bearing_temperature_c",
+      "phase_current_a",
+      "fault_status"
+    ],
+    "categorical_columns": [
+      "timestamp"
+    ],
+    "datetime_candidates": [
+      "timestamp"
+    ],
+    "missing_values": {},
+    "missing_total": 0,
+    "duplicate_rows": 0,
+    "column_samples": {
+      "timestamp": [
+        "2026-01-01 00:00:00",
+        "2026-01-01 01:00:00",
+        "2026-01-01 02:00:00",
+        "2026-01-01 03:00:00",
+        "2026-01-01 04:00:00",
+        "2026-01-01 05:00:00",
+        "2026-01-01 06:00:00",
+        "2026-01-01 07:00:00",
+        "2026-01-01 08:00:00",
+        "2026-01-01 09:00:00",
+        "2026-01-01 10:00:00",
+        "2026-01-01 11:00:00"
+      ],
+      "motor_vibration_mm_s": [
+        2.5006150766787414,
+        2.649372768754235,
+        2.362931072318891,
+        2.054704080621363,
+        2.272664607414139,
+        2.004176722501769,
+        2.5300718012987193,
+        3.170107622777267,
+        2.2538967407243353,
+        2.18976255009003,
+        2.7449210250925993,
+        2.6784435040800303
+      ],
+      "bearing_temperature_c": [
+        72.83099470893048,
+        77.6786671628714,
+        70.62091313800795,
+        80.36488450898862,
+        72.96220307529862,
+        77.08367647926289,
+        63.96374728273559,
+        75.42676034214901,
+        61.18257117843421,
+        58.752697385420475,
+        70.86866185601994,
+        66.70050674680984
+      ],
+      "phase_current_a": [
+        35.23541918895126,
+        34.96815611865112,
+        39.52033036578234,
+        35.79252958186436,
+        36.394225407314835,
+        37.088886228777916,
+        41.706033281008004,
+        39.722043898532554,
+        38.53040107091197,
+        34.745714426587035,
+        31.472125119974137,
+        40.79811972694121
+      ],
+      "fault_status": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "summary": {
+      "motor_vibration_mm_s": {
+        "count": 90.0,
+        "mean": 2.419,
+        "std": 0.432,
+        "min": 1.242,
+        "25%": 2.182,
+        "50%": 2.423,
+        "75%": 2.67,
+        "max": 3.5
+      },
+      "bearing_temperature_c": {
+        "count": 90.0,
+        "mean": 71.655,
+        "std": 6.276,
+        "min": 58.1,
+        "25%": 67.376,
+        "50%": 71.901,
+        "75%": 75.41,
+        "max": 88.713
+      },
+      "phase_current_a": {
+        "count": 90.0,
+        "mean": 36.524,
+        "std": 3.955,
+        "min": 23.994,
+        "25%": 33.635,
+        "50%": 36.929,
+        "75%": 39.443,
+        "max": 45.101
+      },
+      "fault_status": {
+        "count": 90.0,
+        "mean": 0.022,
+        "std": 0.148,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 1.0
+      }
+    },
+    "correlations": [
+      {
+        "x": "motor_vibration_mm_s",
+        "y": "bearing_temperature_c",
+        "value": -0.107
+      },
+      {
+        "x": "motor_vibration_mm_s",
+        "y": "phase_current_a",
+        "value": -0.013
+      },
+      {
+        "x": "motor_vibration_mm_s",
+        "y": "fault_status",
+        "value": 0.274
+      },
+      {
+        "x": "bearing_temperature_c",
+        "y": "motor_vibration_mm_s",
+        "value": -0.107
+      },
+      {
+        "x": "bearing_temperature_c",
+        "y": "phase_current_a",
+        "value": 0.072
+      },
+      {
+        "x": "bearing_temperature_c",
+        "y": "fault_status",
+        "value": 0.22
+      },
+      {
+        "x": "phase_current_a",
+        "y": "motor_vibration_mm_s",
+        "value": -0.013
+      },
+      {
+        "x": "phase_current_a",
+        "y": "bearing_temperature_c",
+        "value": 0.072
+      },
+      {
+        "x": "phase_current_a",
+        "y": "fault_status",
+        "value": 0.012
+      },
+      {
+        "x": "fault_status",
+        "y": "motor_vibration_mm_s",
+        "value": 0.274
+      },
+      {
+        "x": "fault_status",
+        "y": "bearing_temperature_c",
+        "value": 0.22
+      },
+      {
+        "x": "fault_status",
+        "y": "phase_current_a",
+        "value": 0.012
+      }
+    ],
+    "imbalance": {
+      "fault_status": {
+        "0": 88,
+        "1": 2
+      }
+    }
+  },
+  "automl": {
+    "best_model": "Gradient Boosting Classifier",
+    "best_metrics": {
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "roc_auc": 1.0
+    },
+    "leaderboard": [
+      {
+        "model": "Gradient Boosting Classifier",
+        "metrics": {
+          "accuracy": 1.0,
+          "f1": 1.0,
+          "roc_auc": 1.0
+        }
+      },
+      {
+        "model": "Logistic Regression",
+        "metrics": {
+          "accuracy": 0.9565,
+          "f1": 0.9353,
+          "roc_auc": 1.0
+        }
+      },
+      {
+        "model": "SVM",
+        "metrics": {
+          "accuracy": 0.9565,
+          "f1": 0.9353,
+          "roc_auc": 0.9545
+        }
+      },
+      {
+        "model": "Random Forest Classifier",
+        "metrics": {
+          "accuracy": 0.9565,
+          "f1": 0.9353,
+          "roc_auc": 0.9545
+        }
+      },
+      {
+        "model": "XGBoost Classifier",
+        "metrics": {
+          "accuracy": 0.9565,
+          "f1": 0.9353,
+          "roc_auc": 0.9773
+        }
+      }
+    ],
+    "prediction_preview": [
+      {
+        "row": 0,
+        "prediction": 0.0
+      },
+      {
+        "row": 1,
+        "prediction": 0.0
+      },
+      {
+        "row": 2,
+        "prediction": 0.0
+      },
+      {
+        "row": 3,
+        "prediction": 0.0
+      },
+      {
+        "row": 4,
+        "prediction": 0.0
+      },
+      {
+        "row": 5,
+        "prediction": 0.0
+      },
+      {
+        "row": 6,
+        "prediction": 0.0
+      },
+      {
+        "row": 7,
+        "prediction": 0.0
+      },
+      {
+        "row": 8,
+        "prediction": 0.0
+      },
+      {
+        "row": 9,
+        "prediction": 0.0
+      },
+      {
+        "row": 10,
+        "prediction": 0.0
+      },
+      {
+        "row": 11,
+        "prediction": 0.0
+      },
+      {
+        "row": 12,
+        "prediction": 0.0
+      },
+      {
+        "row": 13,
+        "prediction": 0.0
+      },
+      {
+        "row": 14,
+        "prediction": 0.0
+      },
+      {
+        "row": 15,
+        "prediction": 0.0
+      },
+      {
+        "row": 16,
+        "prediction": 0.0
+      },
+      {
+        "row": 17,
+        "prediction": 0.0
+      },
+      {
+        "row": 18,
+        "prediction": 0.0
+      },
+      {
+        "row": 19,
+        "prediction": 0.0
+      }
+    ],
+    "task_type": "classification",
+    "target_column": "fault_status",
+    "features_used": [
+      "motor_vibration_mm_s",
+      "bearing_temperature_c",
+      "phase_current_a",
+      "timestamp_hour",
+      "timestamp_dayofweek"
+    ],
+    "feature_importance": [
+      {
+        "feature": "motor_vibration_mm_s",
+        "importance": 0.49548
+      },
+      {
+        "feature": "bearing_temperature_c",
+        "importance": 0.49079
+      },
+      {
+        "feature": "timestamp_dayofweek",
+        "importance": 0.00636
+      },
+      {
+        "feature": "timestamp_hour",
+        "importance": 0.0041
+      },
+      {
+        "feature": "phase_current_a",
+        "importance": 0.00326
+      }
+    ],
+    "xai_summary": "The selected model relies most on motor_vibration_mm_s, bearing_temperature_c, timestamp_dayofweek. These variables should be monitored as leading industrial drivers for the requested outcome.",
+    "recommendations": [
+      "Deploy the Gradient Boosting Classifier pipeline as a baseline for predictive maintenance.",
+      "Validate the selected model on a recent holdout period before connecting it to operator workflows.",
+      "Tune alert thresholds with maintenance teams to balance missed failures and nuisance alarms."
+    ],
+    "model_file": "D:\\AutoML_XAI\\storage\\models\\smoketest_best_model.pkl"
+  },
+  "insights": [
+    "The selected model relies most on motor_vibration_mm_s, bearing_temperature_c, timestamp_dayofweek. These variables should be monitored as leading industrial drivers for the requested outcome.",
+    "Deploy the Gradient Boosting Classifier pipeline as a baseline for predictive maintenance.",
+    "Validate the selected model on a recent holdout period before connecting it to operator workflows.",
+    "Tune alert thresholds with maintenance teams to balance missed failures and nuisance alarms."
+  ],
+  "artifacts": {
+    "json": "/api/download/smoketest/json",
+    "pdf": "/api/download/smoketest/pdf",
+    "model": "/api/download/smoketest/model"
+  }
+}

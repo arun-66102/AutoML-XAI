@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABB EngineeredX 2.0</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">ABB</span>
+        <div>
+          <strong>EngineeredX 2.0</strong>
+          <small>Industrial AI AutoML</small>
+        </div>
+      </div>
+      <nav>
+        <a href="#workspace">Workspace</a>
+        <a href="#eda">Auto EDA</a>
+        <a href="#models">Model Lab</a>
+        <a href="#xai">Explainability</a>
+        <a href="#outputs">Outputs</a>
+      </nav>
+      <div class="system-card">
+        <span class="pulse"></span>
+        <div>
+          <strong>Local runtime</strong>
+          <small>FastAPI + Ollama/Groq ready</small>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">Industrial predictive intelligence</p>
+          <h1>Autonomous ML engineer for plant datasets</h1>
+        </div>
+        <a class="ghost-button" href="/api/sample-data">Download sample CSV</a>
+      </section>
+
+      <section id="workspace" class="workspace-grid">
+        <form id="uploadForm" class="panel upload-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Dataset Upload</p>
+              <h2>Start an AutoML run</h2>
+            </div>
+            <span class="badge">CSV / Excel</span>
+          </div>
+          <label class="file-drop">
+            <input id="dataset" type="file" accept=".csv,.xlsx,.xls" required />
+            <span>Drop industrial historian data here</span>
+            <small>Sensor logs, SCADA exports, telemetry, energy data</small>
+          </label>
+          <label class="field">
+            <span>Natural-language instruction</span>
+            <textarea id="instruction" rows="4">Predict transformer failure and explain the most important operating signals.</textarea>
+          </label>
+          <button class="primary-button" type="submit">Run intelligent AutoML</button>
+          <p id="status" class="status-text">Waiting for dataset.</p>
+        </form>
+
+        <div class="panel pipeline-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Workflow</p>
+              <h2>Adaptive pipeline</h2>
+            </div>
+          </div>
+          <div class="pipeline" id="pipeline">
+            <span>Upload</span>
+            <span>LLM Understanding</span>
+            <span>Auto EDA</span>
+            <span>Preprocessing</span>
+            <span>AutoML</span>
+            <span>XAI</span>
+            <span>Report</span>
+          </div>
+          <div class="understanding">
+            <div>
+              <small>Detected Task</small>
+              <strong id="taskType">-</strong>
+            </div>
+            <div>
+              <small>Industrial Context</small>
+              <strong id="industrialContext">-</strong>
+            </div>
+            <div>
+              <small>Target</small>
+              <strong id="targetColumn">-</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="eda" class="section">
+        <div class="section-title">
+          <p class="eyebrow">Automated EDA</p>
+          <h2>Dataset health and signal profile</h2>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric"><small>Rows</small><strong id="rows">-</strong></div>
+          <div class="metric"><small>Columns</small><strong id="cols">-</strong></div>
+          <div class="metric"><small>Missing Values</small><strong id="missing">-</strong></div>
+          <div class="metric"><small>Duplicate Rows</small><strong id="dupes">-</strong></div>
+        </div>
+        <div class="chart-grid">
+          <div class="panel"><h3>Feature Type Mix</h3><canvas id="typesChart"></canvas></div>
+          <div class="panel"><h3>Top Missing Signals</h3><canvas id="missingChart"></canvas></div>
+        </div>
+      </section>
+
+      <section id="models" class="section two-col">
+        <div>
+          <div class="section-title">
+            <p class="eyebrow">AutoML Engine</p>
+            <h2>Model leaderboard</h2>
+          </div>
+          <div class="panel table-panel">
+            <table>
+              <thead><tr><th>Model</th><th>Metrics</th></tr></thead>
+              <tbody id="leaderboard"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Best model</h3>
+          <div class="best-model">
+            <strong id="bestModel">-</strong>
+            <pre id="bestMetrics">{}</pre>
+          </div>
+          <h3>Prediction preview</h3>
+          <div id="predictions" class="prediction-list"></div>
+        </div>
+      </section>
+
+      <section id="xai" class="section two-col">
+        <div class="panel">
+          <h3>Feature Importance</h3>
+          <canvas id="importanceChart"></canvas>
+        </div>
+        <div class="panel insights-panel">
+          <h3>Industrial XAI Insights</h3>
+          <p id="xaiSummary">Run an analysis to generate explanations.</p>
+          <ul id="insights"></ul>
+        </div>
+      </section>
+
+      <section id="outputs" class="section output-grid">
+        <div class="panel">
+          <h3>Feedback Loop</h3>
+          <form id="feedbackForm">
+            <label class="field">
+              <span>Refine the run</span>
+              <textarea id="feedback" rows="3" placeholder="Use only tree-based models, reduce false negatives, improve anomaly detection sensitivity"></textarea>
+            </label>
+            <button class="secondary-button" type="submit">Apply feedback</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Deployment-ready outputs</h3>
+          <div class="download-row">
+            <a id="jsonReport" class="download disabled">JSON report</a>
+            <a id="pdfReport" class="download disabled">PDF report</a>
+            <a id="modelFile" class="download disabled">Model .pkl</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
