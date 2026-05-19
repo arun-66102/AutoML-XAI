@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Runtime storage
+storage/uploads/*
+storage/models/*
+storage/reports/*
+storage/jobs/*
+!storage/uploads/.gitkeep
+!storage/models/.gitkeep
+!storage/reports/.gitkeep
+!storage/jobs/.gitkeep
+
+# Logs and local artifacts
+*.log
+*.tmp
+*.bak
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
