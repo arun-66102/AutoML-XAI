@@ -4,6 +4,36 @@ let charts = {};
 const form = document.getElementById("uploadForm");
 const feedbackForm = document.getElementById("feedbackForm");
 const statusText = document.getElementById("status");
+const datasetInput = document.getElementById("dataset");
+const fileLabel = document.getElementById("fileLabel");
+const fileDrop = document.getElementById("fileDrop");
+
+datasetInput.addEventListener("change", () => {
+  updateSelectedFile();
+});
+
+["dragenter", "dragover"].forEach((name) => {
+  fileDrop.addEventListener(name, (event) => {
+    event.preventDefault();
+    fileDrop.classList.add("dragging");
+  });
+});
+
+["dragleave", "drop"].forEach((name) => {
+  fileDrop.addEventListener(name, (event) => {
+    event.preventDefault();
+    fileDrop.classList.remove("dragging");
+  });
+});
+
+fileDrop.addEventListener("drop", (event) => {
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  const transfer = new DataTransfer();
+  transfer.items.add(file);
+  datasetInput.files = transfer.files;
+  updateSelectedFile();
+});
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -105,7 +135,7 @@ function renderCharts(eda, automl) {
     type: "doughnut",
     data: {
       labels: ["Numeric", "Categorical"],
-      datasets: [{ data: [(eda.numeric_columns || []).length, (eda.categorical_columns || []).length], backgroundColor: ["#38c7d4", "#ff2438"] }],
+      datasets: [{ data: [(eda.numeric_columns || []).length, (eda.categorical_columns || []).length], backgroundColor: ["#a8ff1a", "#ffe44d"] }],
     },
     options: baseOptions(),
   });
@@ -115,7 +145,7 @@ function renderCharts(eda, automl) {
     type: "bar",
     data: {
       labels: Object.keys(missing).slice(0, 8),
-      datasets: [{ label: "Missing", data: Object.values(missing).slice(0, 8), backgroundColor: "#f2c94c" }],
+      datasets: [{ label: "Missing", data: Object.values(missing).slice(0, 8), backgroundColor: "#ffe44d" }],
     },
     options: baseOptions(),
   });
@@ -125,13 +155,16 @@ function renderCharts(eda, automl) {
     type: "bar",
     data: {
       labels: importance.map((x) => x.feature),
-      datasets: [{ label: "Importance", data: importance.map((x) => x.importance), backgroundColor: "#5ee08c" }],
+      datasets: [{ label: "Importance", data: importance.map((x) => x.importance), backgroundColor: "#a8ff1a" }],
     },
     options: { ...baseOptions(), indexAxis: "y" },
   });
 }
 
 function drawChart(id, config) {
+  if (!window.Chart) {
+    return;
+  }
   if (charts[id]) charts[id].destroy();
   charts[id] = new Chart(document.getElementById(id), config);
 }
@@ -139,10 +172,10 @@ function drawChart(id, config) {
 function baseOptions() {
   return {
     responsive: true,
-    plugins: { legend: { labels: { color: "#d6dee8" } } },
+    plugins: { legend: { labels: { color: "#f7ffe9" } } },
     scales: {
-      x: { ticks: { color: "#8fa0b4" }, grid: { color: "#263241" } },
-      y: { ticks: { color: "#8fa0b4" }, grid: { color: "#263241" } },
+      x: { ticks: { color: "#b9c9a0" }, grid: { color: "#395222" } },
+      y: { ticks: { color: "#b9c9a0" }, grid: { color: "#395222" } },
     },
   };
 }
@@ -165,6 +198,12 @@ function markPipeline(count) {
 
 function setStatus(text) {
   statusText.textContent = text;
+}
+
+function updateSelectedFile() {
+  const file = datasetInput.files[0];
+  fileLabel.textContent = file ? file.name : "Choose or drop a dataset";
+  setStatus(file ? `Selected ${file.name}. Ready to run.` : "Waiting for dataset.");
 }
 
 function label(value) {

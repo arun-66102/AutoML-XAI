@@ -114,15 +114,26 @@ def _choose_target(df: pd.DataFrame, understanding: dict[str, Any], task_type: s
     if task_type in {"anomaly_detection", "clustering"}:
         return None
     requested = understanding.get("target_column")
-    if requested in df.columns:
+    if requested in df.columns and _target_matches_task(df[requested], task_type):
         return requested
-    candidates = [
-        col for col in df.columns
-        if any(token in col.lower() for token in ["target", "label", "failure", "fault", "status", "energy", "load", "power"])
-    ]
+    if task_type == "classification":
+        tokens = ["target", "label", "failure", "fault", "status", "class", "defect"]
+    else:
+        tokens = ["target", "energy", "load", "power", "temperature", "pressure", "flow"]
+    candidates = [col for col in df.columns if any(token in col.lower() for token in tokens)]
+    candidates = [col for col in candidates if _target_matches_task(df[col], task_type)]
     if candidates:
         return candidates[0]
     return df.columns[-1]
+
+
+def _target_matches_task(series: pd.Series, task_type: str) -> bool:
+    if task_type == "classification":
+        unique = series.nunique(dropna=True)
+        return 1 < unique <= min(20, max(2, int(len(series) * 0.2)))
+    if task_type == "regression":
+        return pd.api.types.is_numeric_dtype(series) and series.nunique(dropna=True) > 5
+    return True
 
 
 def _prepare_dataframe(df: pd.DataFrame, target: str | None, task_type: str) -> PreparedData:
@@ -258,8 +269,9 @@ def _maybe_tune(pipe: Pipeline, x_train: pd.DataFrame, y_train: pd.Series, mode:
 
 
 def _regression_metrics(y_true, preds) -> dict[str, float]:
+    mse = mean_squared_error(y_true, preds)
     return {
-        "rmse": round(float(mean_squared_error(y_true, preds, squared=False)), 4),
+        "rmse": round(float(np.sqrt(mse)), 4),
         "mae": round(float(mean_absolute_error(y_true, preds)), 4),
         "r2": round(float(r2_score(y_true, preds)), 4),
     }

@@ -54,10 +54,16 @@ def heuristic_understanding(instruction: str, columns: list[str]) -> dict[str, A
     }
     context = max(context_scores, key=context_scores.get) if max(context_scores.values() or [0]) else "industrial predictive analytics"
 
+    if task_type == "classification":
+        target_tokens = ["target", "label", "failure", "fault", "status", "class", "defect"]
+    elif task_type == "regression":
+        target_tokens = ["target", "energy", "power", "load", "temperature", "pressure", "flow"]
+    else:
+        target_tokens = ["target", "label"]
+
     target_candidates = [
         col for col in columns
-        if col.lower() in {"target", "label", "failure", "fault", "status", "energy", "power", "load"}
-        or any(token in col.lower() for token in ["target", "label", "failure", "fault", "status", "energy", "power", "load"])
+        if col.lower() in target_tokens or any(token in col.lower() for token in target_tokens)
     ]
 
     return {

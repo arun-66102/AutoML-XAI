@@ -18,8 +18,8 @@ from app.reports import save_json_report, save_pdf_report
 
 
 app = FastAPI(
-    title="ABB EngineeredX 2.0",
-    description="Industrial LLM-driven AutoML platform for predictive analytics, anomaly detection, and adaptive ML workflows.",
+    title="AutoML_XAI",
+    description="Automated machine learning and explainable AI platform for predictive analytics, anomaly detection, and adaptive ML workflows.",
     version="2.0.0",
 )
 
@@ -33,7 +33,7 @@ def index() -> FileResponse:
 
 @app.get("/api/health")
 def health() -> dict:
-    return {"status": "online", "platform": "ABB EngineeredX 2.0"}
+    return {"status": "online", "platform": "AutoML_XAI"}
 
 
 @app.post("/api/analyze")

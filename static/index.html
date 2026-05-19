@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ABB EngineeredX 2.0</title>
+    <title>AutoML_XAI</title>
     <link rel="stylesheet" href="/static/css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <aside class="sidebar">
       <div class="brand">
-        <span class="brand-mark">ABB</span>
+        <span class="brand-mark">AX</span>
         <div>
-          <strong>EngineeredX 2.0</strong>
-          <small>Industrial AI AutoML</small>
+          <strong>AutoML_XAI</strong>
+          <small>Automated ML + Explainable AI</small>
         </div>
       </div>
       <nav>
@@ -27,7 +27,7 @@
         <span class="pulse"></span>
         <div>
           <strong>Local runtime</strong>
-          <small>FastAPI + Ollama/Groq ready</small>
+          <small>FastAPI + AutoML pipeline ready</small>
         </div>
       </div>
     </aside>
@@ -35,10 +35,54 @@
     <main>
       <section class="topbar">
         <div>
-          <p class="eyebrow">Industrial predictive intelligence</p>
-          <h1>Autonomous ML engineer for plant datasets</h1>
+          <p class="eyebrow">AutoML_XAI workspace</p>
+          <h1>Automated machine learning with explainable decisions</h1>
+          <p class="hero-copy">Upload a dataset, describe the objective, and let AutoML_XAI choose the task, train models, compare results, and explain the drivers behind each outcome.</p>
         </div>
         <a class="ghost-button" href="/api/sample-data">Download sample CSV</a>
+      </section>
+
+      <section class="feature-overview">
+        <article class="feature-card">
+          <span>01</span>
+          <h3>Dataset Upload</h3>
+          <p>CSV and Excel intake for sensor logs, telemetry, fault records, energy data, and time-series exports.</p>
+        </article>
+        <article class="feature-card">
+          <span>02</span>
+          <h3>Task Understanding</h3>
+          <p>Natural-language prompts are converted into regression, classification, anomaly detection, or clustering workflows.</p>
+        </article>
+        <article class="feature-card">
+          <span>03</span>
+          <h3>Auto EDA</h3>
+          <p>Missing values, feature types, duplicates, imbalance, summaries, and chart-ready profile data are generated automatically.</p>
+        </article>
+        <article class="feature-card">
+          <span>04</span>
+          <h3>Preprocessing</h3>
+          <p>Imputation, encoding, scaling, datetime features, constant-column cleanup, and imbalance handling are applied as needed.</p>
+        </article>
+        <article class="feature-card">
+          <span>05</span>
+          <h3>AutoML Engine</h3>
+          <p>Candidate models are trained, compared, tuned where useful, and ranked in a leaderboard.</p>
+        </article>
+        <article class="feature-card">
+          <span>06</span>
+          <h3>Evaluation</h3>
+          <p>Metrics such as F1, accuracy, ROC-AUC, RMSE, MAE, R2, silhouette, and anomaly rate are surfaced by task type.</p>
+        </article>
+        <article class="feature-card">
+          <span>07</span>
+          <h3>Explainable AI</h3>
+          <p>Feature importance and readable XAI insights show why the selected model behaves the way it does.</p>
+        </article>
+        <article class="feature-card">
+          <span>08</span>
+          <h3>Outputs</h3>
+          <p>Download JSON reports, PDF reports, trained model files, prediction previews, and recommendations.</p>
+        </article>
       </section>
 
       <section id="workspace" class="workspace-grid">
@@ -46,20 +90,20 @@
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Dataset Upload</p>
-              <h2>Start an AutoML run</h2>
+              <h2>Start an AutoML_XAI run</h2>
             </div>
             <span class="badge">CSV / Excel</span>
           </div>
-          <label class="file-drop">
+          <label class="file-drop" id="fileDrop">
             <input id="dataset" type="file" accept=".csv,.xlsx,.xls" required />
-            <span>Drop industrial historian data here</span>
-            <small>Sensor logs, SCADA exports, telemetry, energy data</small>
+            <span id="fileLabel">Choose or drop a dataset</span>
+            <small>CSV or Excel data for prediction, forecasting, anomaly detection, or clustering</small>
           </label>
           <label class="field">
             <span>Natural-language instruction</span>
-            <textarea id="instruction" rows="4">Predict transformer failure and explain the most important operating signals.</textarea>
+            <textarea id="instruction" rows="4">Predict equipment failure and explain the most important signals.</textarea>
           </label>
-          <button class="primary-button" type="submit">Run intelligent AutoML</button>
+          <button class="primary-button" type="submit">Run AutoML_XAI analysis</button>
           <p id="status" class="status-text">Waiting for dataset.</p>
         </form>
 
@@ -67,7 +111,7 @@
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Workflow</p>
-              <h2>Adaptive pipeline</h2>
+              <h2>Adaptive ML pipeline</h2>
             </div>
           </div>
           <div class="pipeline" id="pipeline">
@@ -85,7 +129,7 @@
               <strong id="taskType">-</strong>
             </div>
             <div>
-              <small>Industrial Context</small>
+              <small>Use Case Context</small>
               <strong id="industrialContext">-</strong>
             </div>
             <div>
@@ -96,10 +140,26 @@
         </div>
       </section>
 
+      <section class="section feature-band">
+        <div class="section-title">
+          <p class="eyebrow">Feature 01</p>
+          <h2>Dataset Upload Module</h2>
+        </div>
+        <p>Upload CSV or Excel datasets and let AutoML_XAI prepare the file for analysis. The module supports click-to-select and drag-and-drop upload for fast local experimentation.</p>
+      </section>
+
+      <section class="section feature-band">
+        <div class="section-title">
+          <p class="eyebrow">Feature 02</p>
+          <h2>Natural-Language Task Understanding</h2>
+        </div>
+        <p>The instruction box captures plain-language goals like prediction, forecasting, fault detection, clustering, or anomaly discovery. The backend maps this intent to the most suitable ML task type.</p>
+      </section>
+
       <section id="eda" class="section">
         <div class="section-title">
-          <p class="eyebrow">Automated EDA</p>
-          <h2>Dataset health and signal profile</h2>
+          <p class="eyebrow">Feature 03</p>
+          <h2>Dataset health and feature profile</h2>
         </div>
         <div class="metrics-grid">
           <div class="metric"><small>Rows</small><strong id="rows">-</strong></div>
@@ -109,14 +169,22 @@
         </div>
         <div class="chart-grid">
           <div class="panel"><h3>Feature Type Mix</h3><canvas id="typesChart"></canvas></div>
-          <div class="panel"><h3>Top Missing Signals</h3><canvas id="missingChart"></canvas></div>
+          <div class="panel"><h3>Top Missing Features</h3><canvas id="missingChart"></canvas></div>
         </div>
+      </section>
+
+      <section class="section feature-band">
+        <div class="section-title">
+          <p class="eyebrow">Feature 04</p>
+          <h2>Intelligent Preprocessing Pipeline</h2>
+        </div>
+        <p>AutoML_XAI builds preprocessing steps automatically: missing-value imputation, categorical encoding, numeric scaling, datetime extraction, feature cleanup, and class balancing when suitable.</p>
       </section>
 
       <section id="models" class="section two-col">
         <div>
           <div class="section-title">
-            <p class="eyebrow">AutoML Engine</p>
+            <p class="eyebrow">Feature 05 and 06</p>
             <h2>Model leaderboard</h2>
           </div>
           <div class="panel table-panel">
@@ -139,11 +207,12 @@
 
       <section id="xai" class="section two-col">
         <div class="panel">
+          <p class="eyebrow">Feature 07</p>
           <h3>Feature Importance</h3>
           <canvas id="importanceChart"></canvas>
         </div>
         <div class="panel insights-panel">
-          <h3>Industrial XAI Insights</h3>
+          <h3>XAI Insights</h3>
           <p id="xaiSummary">Run an analysis to generate explanations.</p>
           <ul id="insights"></ul>
         </div>
@@ -151,6 +220,7 @@
 
       <section id="outputs" class="section output-grid">
         <div class="panel">
+          <p class="eyebrow">Feature 10</p>
           <h3>Feedback Loop</h3>
           <form id="feedbackForm">
             <label class="field">
@@ -161,7 +231,8 @@
           </form>
         </div>
         <div class="panel">
-          <h3>Deployment-ready outputs</h3>
+          <p class="eyebrow">Feature 08 and 09</p>
+          <h3>Exportable outputs</h3>
           <div class="download-row">
             <a id="jsonReport" class="download disabled">JSON report</a>
             <a id="pdfReport" class="download disabled">PDF report</a>

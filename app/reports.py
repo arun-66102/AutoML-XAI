@@ -20,7 +20,7 @@ def save_pdf_report(job: dict, path: Path) -> None:
     width, height = letter
     y = height - 48
     c.setFont("Helvetica-Bold", 16)
-    c.drawString(40, y, "ABB EngineeredX 2.0 Industrial AutoML Report")
+    c.drawString(40, y, "AutoML_XAI AutoML and Explainable AI Report")
     y -= 28
     c.setFont("Helvetica", 10)
 
